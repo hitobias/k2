@@ -192,7 +192,7 @@ class plgUserK2 extends JPlugin
         $db = JFactory::getDbo();
         $query = "DELETE FROM #__k2_users WHERE userID={$user['id']}";
         $db->setQuery($query);
-        $db->query();
+        $db->execute();
     }
 
     public function onBeforeStoreUser($user, $isNew)
@@ -242,7 +242,7 @@ class plgUserK2 extends JPlugin
                 if ($response->ip->appears || $response->email->appears || $response->username->appears) {
                     $db = JFactory::getDbo();
                     $db->setQuery("UPDATE #__users SET block = 1 WHERE id = ".$user['id']);
-                    $db->query();
+                    $db->execute();
                     $user['notes'] = JText::_('K2_POSSIBLE_SPAMMER_DETECTED_BY_STOPFORUMSPAM');
                 }
             }

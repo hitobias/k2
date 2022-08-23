@@ -878,13 +878,13 @@ class K2ModelItem extends K2Model
             if (!$rating) {
                 $query = "INSERT INTO #__k2_rating ( itemID, lastip, rating_sum, rating_count ) VALUES ( ".(int)$item->id.", ".$db->Quote($userIP).", {$rate}, 1 )";
                 $db->setQuery($query);
-                $db->query();
+                $db->execute();
                 echo JText::_('K2_THANKS_FOR_RATING');
             } else {
                 if ($userIP != ($rating->lastip)) {
                     $query = "UPDATE #__k2_rating SET rating_count = rating_count + 1, rating_sum = rating_sum + {$rate}, lastip = ".$db->Quote($userIP)." WHERE itemID = {$item->id}";
                     $db->setQuery($query);
-                    $db->query();
+                    $db->execute();
                     echo JText::_('K2_THANKS_FOR_RATING');
                 } else {
                     echo JText::_('K2_YOU_HAVE_ALREADY_RATED_THIS_ITEM');

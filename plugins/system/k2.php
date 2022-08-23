@@ -145,14 +145,14 @@ class plgSystemK2 extends JPlugin
                 if ($result > 0) {
                     $query = "UPDATE #__jf_content SET value=".$db->Quote($extra_fields)." WHERE reference_field = 'extra_fields' AND language_id = {$language_id} AND reference_id = {$reference_id} AND reference_table='k2_items'";
                     $db->setQuery($query);
-                    $db->query();
+                    $db->execute();
                 } else {
                     $modified = date("Y-m-d H:i:s");
                     $modified_by = $user->id;
                     $published = JRequest::getVar('published', 0);
                     $query = "INSERT INTO #__jf_content (`id`, `language_id`, `reference_id`, `reference_table`, `reference_field` ,`value`, `original_value`, `original_text`, `modified`, `modified_by`, `published`) VALUES (NULL, {$language_id}, {$reference_id}, 'k2_items', 'extra_fields', ".$db->Quote($extra_fields).", '','', ".$db->Quote($modified).", {$modified_by}, {$published} )";
                     $db->setQuery($query);
-                    $db->query();
+                    $db->execute();
                 }
 
                 $query = "SELECT COUNT(*) FROM #__jf_content WHERE reference_field = 'extra_fields_search' AND language_id = {$language_id} AND reference_id = {$reference_id} AND reference_table='k2_items'";
@@ -162,14 +162,14 @@ class plgSystemK2 extends JPlugin
                 if ($result > 0) {
                     $query = "UPDATE #__jf_content SET value=".$db->Quote($extra_fields_search)." WHERE reference_field = 'extra_fields_search' AND language_id = {$language_id} AND reference_id = {$reference_id} AND reference_table='k2_items'";
                     $db->setQuery($query);
-                    $db->query();
+                    $db->execute();
                 } else {
                     $modified = date("Y-m-d H:i:s");
                     $modified_by = $user->id;
                     $published = JRequest::getVar('published', 0);
                     $query = "INSERT INTO #__jf_content (`id`, `language_id`, `reference_id`, `reference_table`, `reference_field` ,`value`, `original_value`, `original_text`, `modified`, `modified_by`, `published`) VALUES (NULL, {$language_id}, {$reference_id}, 'k2_items', 'extra_fields_search', ".$db->Quote($extra_fields_search).", '','', ".$db->Quote($modified).", {$modified_by}, {$published} )";
                     $db->setQuery($query);
-                    $db->query();
+                    $db->execute();
                 }
             }
 
@@ -275,14 +275,14 @@ class plgSystemK2 extends JPlugin
                 if ($result > 0) {
                     $query = "UPDATE #__jf_content SET value=".$db->Quote($value)." WHERE reference_field = 'value' AND language_id = {$language_id} AND reference_id = {$reference_id} AND reference_table='k2_extra_fields'";
                     $db->setQuery($query);
-                    $db->query();
+                    $db->execute();
                 } else {
                     $modified = date("Y-m-d H:i:s");
                     $modified_by = $user->id;
                     $published = JRequest::getVar('published', 0);
                     $query = "INSERT INTO #__jf_content (`id`, `language_id`, `reference_id`, `reference_table`, `reference_field` ,`value`, `original_value`, `original_text`, `modified`, `modified_by`, `published`) VALUES (NULL, {$language_id}, {$reference_id}, 'k2_extra_fields', 'value', ".$db->Quote($value).", '','', ".$db->Quote($modified).", {$modified_by}, {$published} )";
                     $db->setQuery($query);
-                    $db->query();
+                    $db->execute();
                 }
             }
 

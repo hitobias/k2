@@ -457,10 +457,10 @@ class K2ModelCategories extends K2Model
         $db = JFactory::getDbo();
         $query = "UPDATE #__k2_categories SET trash=1  WHERE id IN ({$sql})";
         $db->setQuery($query);
-        $db->query();
+        $db->execute();
         $query = "UPDATE #__k2_items SET trash=1  WHERE catid IN ({$sql})";
         $db->setQuery($query);
-        $db->query();
+        $db->execute();
 
         JPluginHelper::importPlugin('finder');
         $dispatcher = JDispatcher::getInstance();
@@ -502,7 +502,7 @@ class K2ModelCategories extends K2Model
         if (count($restored)) {
             JArrayHelper::toInteger($restored);
             $db->setQuery('UPDATE #__k2_items SET trash = 0 WHERE catid IN ('.implode(',', $restored).') AND trash = 1');
-            $db->query();
+            $db->execute();
         }
         JPluginHelper::importPlugin('finder');
         $dispatcher = JDispatcher::getInstance();

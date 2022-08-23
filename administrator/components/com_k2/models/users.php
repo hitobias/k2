@@ -178,7 +178,7 @@ class K2ModelUsers extends K2Model
         $db = JFactory::getDbo();
         $query = "DELETE FROM #__k2_users WHERE userID IN(".implode(',', $cid).")";
         $db->setQuery($query);
-        $db->query();
+        $db->execute();
         $cache = JFactory::getCache('com_k2');
         $cache->clean();
         $app->enqueueMessage(JText::_('K2_USER_PROFILE_DELETED'));
@@ -261,7 +261,7 @@ class K2ModelUsers extends K2Model
         $db = JFactory::getDbo();
         $query = "UPDATE #__users SET block=0 WHERE id IN(".implode(',', $cid).")";
         $db->setQuery($query);
-        $db->query();
+        $db->execute();
         $app->enqueueMessage(JText::_('K2_USERS_ENABLED'));
         if (JRequest::getCmd('context') == "modalselector") {
             $app->redirect('index.php?option=com_k2&view=users&tmpl=component&context=modalselector');
@@ -278,7 +278,7 @@ class K2ModelUsers extends K2Model
         $db = JFactory::getDbo();
         $query = "UPDATE #__users SET block=1 WHERE id IN(".implode(',', $cid).")";
         $db->setQuery($query);
-        $db->query();
+        $db->execute();
         $app->enqueueMessage(JText::_('K2_USERS_DISABLED'));
         if (JRequest::getCmd('context') == "modalselector") {
             $app->redirect('index.php?option=com_k2&view=users&tmpl=component&context=modalselector');
@@ -342,11 +342,11 @@ class K2ModelUsers extends K2Model
 
             $query = "DELETE FROM #__users WHERE id IN(".implode(',', $IDsToDelete).") AND id!={$user->id}";
             $db->setQuery($query);
-            $db->query();
+            $db->execute();
         }
         $query = "DELETE FROM #__k2_users WHERE userID IN(".implode(',', $IDsToDelete).") AND userID!={$user->id}";
         $db->setQuery($query);
-        $db->query();
+        $db->execute();
         $app->enqueueMessage(JText::_('K2_DELETE_COMPLETED'));
         $app->redirect('index.php?option=com_k2&view=users');
     }
@@ -366,10 +366,10 @@ class K2ModelUsers extends K2Model
                 foreach ($cid as $id) {
                     $query = "DELETE FROM #__user_usergroup_map WHERE user_id = ".$id;
                     $db->setQuery($query);
-                    $db->query();
+                    $db->execute();
                     $query = "INSERT INTO #__user_usergroup_map VALUES (".$id.", ".implode("), (".$id.", ", $group).")";
                     $db->setQuery($query);
-                    $db->query();
+                    $db->execute();
                 }
             }
         } else {
@@ -379,7 +379,7 @@ class K2ModelUsers extends K2Model
                 $gid = $db->loadResult();
                 $query = "UPDATE #__users SET gid={$gid}, usertype=".$db->Quote($group)." WHERE id IN(".implode(',', $cid).")";
                 $db->setQuery($query);
-                $db->query();
+                $db->execute();
             }
         }
 
@@ -395,7 +395,7 @@ class K2ModelUsers extends K2Model
                     $query = "INSERT INTO #__k2_users VALUES ('', {$id}, {$db->Quote($user->username)}, '', '', '', '', {$k2group}, '', '', '', '')";
                 }
                 $db->setQuery($query);
-                $db->query();
+                $db->execute();
             }
         }
         $app->enqueueMessage(JText::_('K2_MOVE_COMPLETED'));
