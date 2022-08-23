@@ -46,11 +46,11 @@ if (version_compare(JVERSION, '1.6.0', '<')) {
         if (!$k2AlreadyInstalled) {
             $query = "UPDATE #__modules SET position='icon', ordering=99, published=1 WHERE module='mod_k2_quickicons'";
             $db->setQuery($query);
-            $db->excute();
+            $db->execute();
 
             $query = "UPDATE #__modules SET position='cpanel', ordering=0, published=1 WHERE module='mod_k2_stats'";
             $db->setQuery($query);
-            $db->excute();
+            $db->execute();
         }
     }
 
@@ -68,7 +68,7 @@ if (version_compare(JVERSION, '1.6.0', '<')) {
             $result = $installer->install($path);
             $query = "UPDATE #__plugins SET published=1 WHERE element=".$db->Quote($pname)." AND folder=".$db->Quote($pgroup);
             $db->setQuery($query);
-            $db->excute();
+            $db->execute();
             $status->plugins[] = array('name' => $pname, 'group' => $pgroup, 'result' => $result);
         }
     }
@@ -99,31 +99,31 @@ if (version_compare(JVERSION, '1.6.0', '<')) {
     if (!array_key_exists('featured_ordering', $fields['#__k2_items'])) {
         $query = "ALTER TABLE #__k2_items ADD `featured_ordering` INT(11) NOT NULL default '0' AFTER `featured`";
         $db->setQuery($query);
-        $db->excute();
+        $db->execute();
     }
     if (!array_key_exists('language', $fields['#__k2_items'])) {
         $query = "ALTER TABLE #__k2_items ADD `language` CHAR(7) NOT NULL";
         $db->setQuery($query);
-        $db->excute();
+        $db->execute();
 
         $query = "ALTER TABLE #__k2_items ADD INDEX (`language`)";
         $db->setQuery($query);
-        $db->excute();
+        $db->execute();
     }
     if ($fields['#__k2_items']['introtext'] == 'text') {
         $query = "ALTER TABLE #__k2_items MODIFY `introtext` MEDIUMTEXT";
         $db->setQuery($query);
-        $db->excute();
+        $db->execute();
     }
     if ($fields['#__k2_items']['fulltext'] == 'text') {
         $query = "ALTER TABLE #__k2_items MODIFY `fulltext` MEDIUMTEXT";
         $db->setQuery($query);
-        $db->excute();
+        $db->execute();
     }
     if ($fields['#__k2_items']['video'] != 'text') {
         $query = "ALTER TABLE #__k2_items MODIFY `video` TEXT";
         $db->setQuery($query);
-        $db->excute();
+        $db->execute();
     }
 
     $query = "SHOW INDEX FROM #__k2_items";
@@ -142,12 +142,12 @@ if (version_compare(JVERSION, '1.6.0', '<')) {
     if ($itemKeys_item) {
         $query = "ALTER TABLE #__k2_items DROP INDEX `item`";
         $db->setQuery($query);
-        $db->excute();
+        $db->execute();
     }
     if (!$itemKeys_idx_item) {
         $query = "ALTER TABLE #__k2_items ADD INDEX `idx_item` (`published`,`publish_up`,`publish_down`,`trash`,`access`)";
         $db->setQuery($query);
-        $db->excute();
+        $db->execute();
     }
 
     // Categories
@@ -155,11 +155,11 @@ if (version_compare(JVERSION, '1.6.0', '<')) {
     if (!array_key_exists('language', $fields['#__k2_categories'])) {
         $query = "ALTER TABLE #__k2_categories ADD `language` CHAR(7) NOT NULL";
         $db->setQuery($query);
-        $db->excute();
+        $db->execute();
 
         $query = "ALTER TABLE #__k2_categories ADD INDEX `idx_language` (`language`)";
         $db->setQuery($query);
-        $db->excute();
+        $db->execute();
     }
 
     // Comments (add index for comments count)
@@ -175,7 +175,7 @@ if (version_compare(JVERSION, '1.6.0', '<')) {
     if (!$indexExists) {
         $query = "ALTER TABLE #__k2_comments ADD INDEX `idx_countComments` (`itemID`, `published`)";
         $db->setQuery($query);
-        $db->excute();
+        $db->execute();
     }
 
     // Users
@@ -186,7 +186,7 @@ if (version_compare(JVERSION, '1.6.0', '<')) {
             ADD `hostname` VARCHAR(255) NOT NULL ,
             ADD `notes` TEXT NOT NULL";
         $db->setQuery($query);
-        $db->excute();
+        $db->execute();
     }
 
     // Users - add new ENUM option for "gender"
@@ -196,7 +196,7 @@ if (version_compare(JVERSION, '1.6.0', '<')) {
     if (count($enumOptions) < 3) {
         $query = "ALTER TABLE #__k2_users MODIFY COLUMN `gender` enum('m','f','n') NOT NULL DEFAULT 'n'";
         $db->setQuery($query);
-        $db->excute();
+        $db->execute();
     }
 
     // User groups (set first 2 user groups)
@@ -206,11 +206,11 @@ if (version_compare(JVERSION, '1.6.0', '<')) {
     if ($userGroupCount == 0) {
         $query = "INSERT INTO #__k2_user_groups (`id`, `name`, `permissions`) VALUES('', 'Registered', 'comment=1\nfrontEdit=0\nadd=0\neditOwn=0\neditAll=0\npublish=0\neditPublished=0\ninheritance=0\ncategories=all\n\n')";
         $db->setQuery($query);
-        $db->excute();
+        $db->execute();
 
         $query = "INSERT INTO #__k2_user_groups (`id`, `name`, `permissions`) VALUES('', 'Site Owner', 'comment=1\nfrontEdit=1\nadd=1\neditOwn=1\neditAll=1\npublish=1\neditPublished=1\ninheritance=1\ncategories=all\n\n')";
         $db->setQuery($query);
-        $db->excute();
+        $db->execute();
     }
 
     // Log for updates
@@ -220,12 +220,12 @@ if (version_compare(JVERSION, '1.6.0', '<')) {
             `timestamp` datetime NOT NULL
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;";
     $db->setQuery($query);
-    $db->excute();
+    $db->execute();
 
     // Clean up empty entries in #__k2_users table caused by an issue in the K2 user plugin
     $query = "DELETE FROM #__k2_users WHERE userID = 0";
     $db->setQuery($query);
-    $db->excute();
+    $db->execute();
 
     /*
     // TO DO: Use the following info to remove FULLTEXT attributes from the items & tags tables
@@ -242,11 +242,11 @@ if (version_compare(JVERSION, '1.6.0', '<')) {
     if (!$indexExists) {
         $query = "ALTER TABLE #__k2_items ADD FULLTEXT `search` (`title`,`introtext`,`fulltext`,`extra_fields_search`,`image_caption`,`image_credits`,`video_caption`,`video_credits`,`metadesc`,`metakey`)";
         $db->setQuery($query);
-        $db->excute();
+        $db->execute();
 
         $query = "ALTER TABLE #__k2_items ADD FULLTEXT (`title`)";
         $db->setQuery($query);
-        $db->excute();
+        $db->execute();
     }
 
     $query = "SHOW INDEX FROM #__k2_tags";
@@ -262,7 +262,7 @@ if (version_compare(JVERSION, '1.6.0', '<')) {
     if (!$indexExists) {
         $query = "ALTER TABLE #__k2_tags ADD FULLTEXT (`name`)";
         $db->setQuery($query);
-        $db->excute();
+        $db->execute();
     }
     */
 
